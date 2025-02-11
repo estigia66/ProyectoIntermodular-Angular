@@ -1,0 +1,35 @@
+<div class="container mt-5">
+  <h2>Lista de Proyectos</h2>
+
+  <!-- Verifica si hay proyectos -->
+  @if (proyectos.length > 0) {
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Tecnologías</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Recorre la lista de proyectos -->
+        <tr *ngFor="let proyecto of proyectos">
+          <td>{{ proyecto.nombre }}</td>
+          <td>{{ proyecto.tecnologias }}</td>
+          <td>
+            <!-- Enlace para editar -->
+            <a [routerLink]="['/editar', proyecto.id]" class="btn btn-sm btn-info me-2">Editar</a>
+            <!-- Botón para eliminar -->
+            <button (click)="eliminarProyecto(proyecto.id)" class="btn btn-sm btn-danger">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  } @else {
+    <!-- Mensaje si no hay proyectos -->
+    <p>No hay proyectos disponibles. Agrega uno nuevo.</p>
+  }
+
+  <!-- Botón para crear un nuevo proyecto -->
+  <a routerLink="/nuevo" class="btn btn-primary mt-3">Nuevo Proyecto</a>
+</div>
