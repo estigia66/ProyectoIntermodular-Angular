@@ -7,10 +7,10 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ProyectoService {
-  private firestore: Firestore = inject(Firestore); // ✅ Corrección: Inyección segura de Firestore
+  private firestore: Firestore = inject(Firestore);
   private coleccionProyectos = 'proyectos'; // Nombre de la colección en Firestore
 
-  // ✅ Obtener todos los proyectos con conversión de fechas
+  // Obtener todos los proyectos con conversión de fechas
   obtenerProyectos(): Observable<any[]> {
     const proyectosRef = collection(this.firestore, this.coleccionProyectos);
     return collectionData(proyectosRef, { idField: 'id' }).pipe(
@@ -22,7 +22,7 @@ export class ProyectoService {
     );
   }
 
-  // ✅ Obtener un proyecto por ID con conversión de fechas
+  // Obtener un proyecto por ID con conversión de fechas
   obtenerProyectoPorId(id: string): Observable<any> {
     const proyectoDocRef = doc(this.firestore, `${this.coleccionProyectos}/${id}`);
     return docData(proyectoDocRef, { idField: 'id' }).pipe(
@@ -34,14 +34,14 @@ export class ProyectoService {
     );
   }
 
-  // ✅ Método auxiliar para manejar fechas correctamente
+  // Método auxiliar para manejar fechas correctamente
   private convertirFecha(fecha: any): string {
     if (!fecha) return ''; // ✅ Maneja fechas nulas o indefinidas
     if (fecha.seconds) return new Date(fecha.seconds * 1000).toISOString().split('T')[0]; // ✅ Maneja Firestore Timestamp
     return fecha; // Si ya es un string (fecha en texto), lo deja sin cambios
   }
 
-  // ✅ Agregar un nuevo proyecto con conversión a Timestamp
+  // Agregar un nuevo proyecto con conversión a Timestamp
   agregarProyecto(proyecto: any): Promise<any> {
     const proyectosRef = collection(this.firestore, this.coleccionProyectos);
     return addDoc(proyectosRef, {
@@ -51,7 +51,7 @@ export class ProyectoService {
     });
   }
 
-  // ✅ Actualizar un proyecto con conversión a Timestamp
+  // Actualizar un proyecto con conversión a Timestamp
   actualizarProyecto(id: string, data: any): Promise<void> {
     const proyectoDocRef = doc(this.firestore, `${this.coleccionProyectos}/${id}`);
     return updateDoc(proyectoDocRef, {
@@ -61,7 +61,7 @@ export class ProyectoService {
     });
   }
 
-  // ✅ Eliminar un proyecto
+  // Eliminar un proyecto
   eliminarProyecto(id: string): Promise<void> {
     const proyectoDocRef = doc(this.firestore, `${this.coleccionProyectos}/${id}`);
     return deleteDoc(proyectoDocRef);
