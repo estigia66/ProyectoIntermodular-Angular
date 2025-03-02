@@ -1,0 +1,62 @@
+<div class="container mt-5">
+    <h2>Editar Proyecto</h2>
+  
+    <form [formGroup]="formularioProyecto" (ngSubmit)="actualizarProyecto()">
+      <!-- Nombre -->
+      <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre del Proyecto</label>
+        <input type="text" id="nombre" class="form-control" formControlName="nombre" />
+        <div *ngIf="formularioProyecto.get('nombre')?.invalid && formularioProyecto.get('nombre')?.touched" class="text-danger">
+          El nombre del proyecto es obligatorio.
+        </div>
+      </div>
+  
+      <!-- Descripción -->
+      <div class="mb-3">
+        <label for="descripcion" class="form-label">Descripción</label>
+        <textarea id="descripcion" class="form-control" formControlName="descripcion"></textarea>
+        <div *ngIf="formularioProyecto.get('descripcion')?.invalid && formularioProyecto.get('descripcion')?.touched" class="text-danger">
+          La descripción es obligatoria.
+        </div>
+      </div>
+  
+      <!-- Estado -->
+      <div class="mb-3">
+        <label for="estado" class="form-label">Estado</label>
+        <select id="estado" class="form-select" formControlName="estado">
+          <option *ngFor="let est of estados" [value]="est">{{ est }}</option>
+        </select>
+        <div *ngIf="formularioProyecto.get('estado')?.invalid && formularioProyecto.get('estado')?.touched" class="text-danger">
+          Debes seleccionar un estado.
+        </div>
+      </div>
+  
+      <!-- Fecha de Inicio -->
+      <div class="mb-3">
+        <label for="fechaInicio" class="form-label">Fecha de Inicio</label>
+        <input type="date" id="fechaInicio" class="form-control" formControlName="fechaInicio" />
+        <div *ngIf="formularioProyecto.get('fechaInicio')?.invalid && formularioProyecto.get('fechaInicio')?.touched" class="text-danger">
+          La fecha de inicio es obligatoria.
+        </div>
+      </div>
+  
+      <!-- Fecha de Fin (Opcional) -->
+      <div class="mb-3">
+        <label for="fechaFin" class="form-label">Fecha de Fin</label>
+        <input type="date" id="fechaFin" class="form-control" formControlName="fechaFin" />
+      </div>
+  
+      <!-- Tecnologías -->
+      <div class="mb-3">
+        <label for="tecnologias" class="form-label">Tecnologías</label>
+        <input type="text" id="tecnologias" class="form-control" formControlName="tecnologias" />
+        <div *ngIf="formularioProyecto.get('tecnologias')?.invalid && formularioProyecto.get('tecnologias')?.touched" class="text-danger">
+          Debes especificar al menos una tecnología.
+        </div>
+      </div>
+  
+      <!-- Botones -->
+      <button type="submit" class="btn btn-primary" [disabled]="formularioProyecto.invalid">Actualizar Proyecto</button>
+      <button type="button" class="btn btn-secondary ms-2" (click)="cancelarEdicion()">Cancelar</button>
+    </form>
+  </div>

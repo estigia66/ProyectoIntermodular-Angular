@@ -21,7 +21,11 @@ export class ProyectosListaComponent implements OnInit {
 
   cargarProyectos(): void {
     this.proyectoService.obtenerProyectos().subscribe(data => {
-      this.proyectos = data;
+      this.proyectos = data.map(proyecto => ({
+        ...proyecto,
+        fechaInicio: proyecto.fechaInicio ? new Date(proyecto.fechaInicio).toLocaleDateString() : 'N/A',
+        fechaFin: proyecto.fechaFin ? new Date(proyecto.fechaFin).toLocaleDateString() : 'Sin finalizar'
+      }));
     });
   }
 

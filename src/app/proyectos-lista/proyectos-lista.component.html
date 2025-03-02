@@ -2,11 +2,15 @@
   <h2>Lista de Proyectos</h2>
 
   <!-- Verifica si hay proyectos -->
-  @if (proyectos.length > 0) {
+  <div *ngIf="proyectos.length > 0; else noProyectos">
     <table class="table table-striped">
       <thead>
         <tr>
           <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Estado</th>
+          <th>Fecha Inicio</th>
+          <th>Fecha Fin</th>
           <th>Tecnologías</th>
           <th>Acciones</th>
         </tr>
@@ -15,7 +19,11 @@
         <!-- Recorre la lista de proyectos -->
         <tr *ngFor="let proyecto of proyectos">
           <td>{{ proyecto.nombre }}</td>
-          <td>{{ proyecto.tecnologias }}</td>
+          <td>{{ proyecto.descripcion }}</td>
+          <td>{{ proyecto.estado }}</td>
+          <td>{{ proyecto.fechaInicio }}</td>
+          <td>{{ proyecto.fechaFin }}</td>
+          <td>{{ proyecto.tecnologias?.join(', ') }}</td>
           <td>
             <!-- Enlace para editar -->
             <a [routerLink]="['/editar', proyecto.id]" class="btn btn-sm btn-info me-2">Editar</a>
@@ -25,10 +33,12 @@
         </tr>
       </tbody>
     </table>
-  } @else {
-    <!-- Mensaje si no hay proyectos -->
+  </div>
+
+  <!-- Mensaje si no hay proyectos -->
+  <ng-template #noProyectos>
     <p>No hay proyectos disponibles. Agrega uno nuevo.</p>
-  }
+  </ng-template>
 
   <!-- Botón para crear un nuevo proyecto -->
   <a routerLink="/nuevo" class="btn btn-primary mt-3">Nuevo Proyecto</a>
