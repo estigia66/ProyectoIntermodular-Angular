@@ -1,0 +1,25 @@
+<div class="container">
+    <h2 class="text-center mt-3">Lista de Tecnologías</h2>
+    
+    <!-- Botón para añadir nueva tecnología -->
+    <div class="text-end">
+      <a routerLink="/tecnologias/nueva" class="btn btn-primary">Añadir Tecnología</a>
+    </div>
+  
+    <div class="row mt-3">
+      <div *ngFor="let tecnologia of tecnologias" class="col-md-4">
+        <div class="card mt-3">
+          <div class="card-body">
+            <h5 class="card-title">{{ tecnologia.nombre }}</h5>
+            <p class="card-text">{{ tecnologia.descripcion }}</p>
+            
+            <!-- Botón de editar -->
+            <a [routerLink]="['/tecnologias/editar', tecnologia.id]" class="btn btn-warning">Editar</a>
+            
+            <!-- Botón de eliminar -->
+            <button class="btn btn-danger ms-2" (click)="eliminarTecnologia(tecnologia.id)">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

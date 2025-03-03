@@ -1,0 +1,27 @@
+<div class="container">
+    <h2 class="text-center mt-3">Añadir Nueva Tecnología</h2>
+    <form (ngSubmit)="agregarTecnologia()">
+      <div class="mb-3">
+        <label class="form-label">Nombre:</label>
+        <input type="text" class="form-control" [(ngModel)]="tecnologia.nombre" name="nombre" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Descripción:</label>
+        <textarea class="form-control" [(ngModel)]="tecnologia.descripcion" name="descripcion" required></textarea>
+      </div>
+      
+      <!-- Input para subir imagen -->
+      <div class="mb-3">
+        <label class="form-label">Imagen:</label>
+        <input type="file" class="form-control" (change)="cargarImagen($event)" accept="image/*">
+      </div>
+
+      <!-- Previsualización de la imagen -->
+      <div class="mb-3 text-center" *ngIf="imagenPreview">
+        <img [src]="imagenPreview" alt="Previsualización" class="img-thumbnail" style="max-width: 200px;">
+      </div>
+
+      <button type="submit" class="btn btn-primary">Añadir</button>
+      <a routerLink="/tecnologias" class="btn btn-secondary ms-2">Cancelar</a>
+    </form>
+</div>

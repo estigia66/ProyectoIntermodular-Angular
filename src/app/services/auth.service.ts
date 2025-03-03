@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, doc, setDoc, Timestamp } from '@angular/fire/firestore';
+import { Firestore, doc, getDoc, setDoc, Timestamp } from '@angular/fire/firestore';
 import { Auth, User, UserCredential, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { environment } from '../../environments/environment'; 
@@ -8,17 +8,18 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class AuthService {
-  private auth: Auth = inject(Auth); 
-  private firestore: Firestore = inject(Firestore);
-  private userSubject = new BehaviorSubject<User | null>(null);
-  user$: Observable<User | null> = this.userSubject.asObservable();
+  private userSubject = new BehaviorSubject<any | null>(null);
+  user$: Observable<any | null> = this.userSubject.asObservable();
 
-  constructor() {
-    // Detectar cambios en la autenticación
-    onAuthStateChanged(this.auth, (user) => {
-      this.userSubject.next(user);
+  constructor(private auth: Auth, private firestore: Firestore) {
+    onAuthStateChanged(this.auth, async (user) => {
+      if (user) {
+        const userData = await this.getUserData(user.uid);
+        this.userSubject.next(userData);
+      } else {
+        this.userSubject.next(null);
+      }
     });
-    // Exponer el servicio en la consola
     (window as any).authService = this;
   }
 
@@ -33,8 +34,8 @@ export class AuthService {
   }
 
   // Obtener usuario actual
-  getUsuarioActual(): User | null {
-    return this.auth.currentUser;
+  getUsuarioActual(): any | null {
+    return this.userSubject.value;
   }
 
   // Registro con email, contraseña y datos adicionales
@@ -50,7 +51,8 @@ export class AuthService {
         nombre,
         apellidos,
         fechaNacimiento: Timestamp.fromDate(new Date(fechaNacimiento)), // Convertimos a Timestamp
-        email
+        email,
+        rol: 'usuario'
       });
 
       // Actualizar el perfil del usuario en Firebase Auth
@@ -78,6 +80,7 @@ export class AuthService {
           nombre: user.displayName || '',
           email: user.email,
           photoURL: user.photoURL || '',
+          rol: 'usuario'
         }, { merge: true }); // No sobreescribe si ya existe
       }
       
@@ -87,5 +90,20 @@ export class AuthService {
       throw error;
     }
   }
+  // Obtener datos adicionales del usuario desde Firestore
+  async getUserData(uid: string): Promise<any | null> {
+    try {
+      const userRef = doc(this.firestore, `usuarios/${uid}`);
+      const userSnapshot = await getDoc(userRef);
 
+      if (userSnapshot.exists()) {
+        return { uid, ...userSnapshot.data() };
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error("Error al obtener datos del usuario:", error);
+      return null;
+    }
+  }
 }
