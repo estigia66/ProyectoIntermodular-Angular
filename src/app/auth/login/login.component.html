@@ -14,4 +14,8 @@
       <button type="submit" [disabled]="loginForm.invalid">Iniciar sesión</button>
       <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
     </form>
+    <button class="google-login-button" (click)="onLoginWithGoogle()">
+      <img src="assets/google-icon.png" alt="Google">
+    </button>
+    <p>¿No tienes cuenta? <a routerLink="/register">Regístrate aquí</a></p>  
   </div>

@@ -1,4 +1,4 @@
-.login-container {
+.register-container {
     max-width: 400px;
     margin: auto;
     padding: 20px;
@@ -29,38 +29,18 @@
   button {
     width: 100%;
     padding: 10px;
-    background-color: #007bff;
+    background-color: #28a745;
     color: white;
-    border: 1px solid black;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
+    border: none;
+    border-radius: 4px;
     cursor: pointer;
   }
   
   button:disabled {
     background-color: #ccc;
-    border: 1px solid black;
   }
   
   .error {
     color: red;
     margin-top: 10px;
   }
-
-  .google-login-button {
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-    border: 1px solid black;
-    border-radius: 10px;
-    background-color: #98c4f3;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-}
-
-.google-login-button img {
-    width: 80px; /* Ajusta el tamaño del icono */
-    height: 35px;
-}
