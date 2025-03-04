@@ -20,7 +20,10 @@ export class TecnologiasListaComponent implements OnInit {
 
   cargarTecnologias(): void {
     this.tecnologiaService.obtenerTecnologias().subscribe((data) => {
-      this.tecnologias = data;
+      this.tecnologias = data.map(tecnologia => ({
+        ...tecnologia,
+        imagenUrl: tecnologia.imagenUrl || 'assets/imagenes/default.jpg' // Imagen por defecto si no hay imagen
+      }));
     });
   }
 
