@@ -48,12 +48,15 @@
         <input type="date" id="fechaFin" class="form-control" formControlName="fechaFin" />
       </div>
   
-      <!-- Tecnologías -->
+      <!-- Lista de tecnologías -->
       <div class="mb-3">
-        <label for="tecnologias" class="form-label">Tecnologías</label>
-        <input type="text" id="tecnologias" class="form-control" formControlName="tecnologias" placeholder="Ejemplo: Angular, Firebase, Node.js" />
-        <div *ngIf="formularioProyecto.get('tecnologias')?.invalid && formularioProyecto.get('tecnologias')?.touched" class="text-danger">
-          Especifica al menos una tecnología.
+        <label class="form-label">Tecnologías</label>
+        <div *ngFor="let tecnologia of tecnologiasDisponibles">
+          <input 
+            type="checkbox"
+            [value]="tecnologia.nombre"
+            (change)="onCheckboxChange($event)"
+          /> {{ tecnologia.nombre }}
         </div>
       </div>
   
