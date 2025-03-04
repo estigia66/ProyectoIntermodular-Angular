@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProyectoService } from '../services/proyecto.service';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-proyectos-lista',
@@ -13,7 +14,7 @@ import { RouterModule } from '@angular/router';
 export class ProyectosListaComponent implements OnInit {
   proyectos: any[] = [];
 
-  constructor(private proyectoService: ProyectoService) {}
+  constructor(private proyectoService: ProyectoService, private router: Router) {}
 
   ngOnInit(): void {
     this.cargarProyectos();
@@ -27,6 +28,10 @@ export class ProyectosListaComponent implements OnInit {
         fechaFin: proyecto.fechaFin ? new Date(proyecto.fechaFin).toLocaleDateString() : 'Sin finalizar'
       }));
     });
+  }
+
+  verFacturas(proyectoId: string) {
+    this.router.navigate(['/facturas', proyectoId]);
   }
 
   eliminarProyecto(id: string): void {
