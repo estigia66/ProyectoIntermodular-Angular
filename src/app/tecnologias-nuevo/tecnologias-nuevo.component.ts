@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-tecnologias-nuevo',
+  imports: [CommonModule, FormsModule],
   templateUrl: './tecnologias-nuevo.component.html',
   styleUrls: ['./tecnologias-nuevo.component.css']
 })
+
 export class TecnologiasNuevoComponent {
   tecnologia = { nombre: '', descripcion: '', imagen: '' };
   imagenPreview: string | ArrayBuffer | null = null;

@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Firestore, doc, getDoc, updateDoc } from '@angular/fire/firestore';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-tecnologias-editar',
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './tecnologias-editar.component.html',
   styleUrls: ['./tecnologias-editar.component.css']
 })
@@ -14,7 +18,7 @@ export class TecnologiasEditarComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
+    public router: Router,
     private firestore: Firestore
   ) {}
 
