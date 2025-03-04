@@ -1,27 +1,26 @@
 <div class="container">
-    <h2 class="text-center mt-3">Añadir Nueva Tecnología</h2>
-    <form (ngSubmit)="agregarTecnologia()">
-      <div class="mb-3">
-        <label class="form-label">Nombre:</label>
-        <input type="text" class="form-control" [(ngModel)]="tecnologia.nombre" name="nombre" required>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Descripción:</label>
-        <textarea class="form-control" [(ngModel)]="tecnologia.descripcion" name="descripcion" required></textarea>
-      </div>
-      
-      <!-- Input para subir imagen -->
-      <div class="mb-3">
-        <label class="form-label">Imagen:</label>
-        <input type="file" class="form-control" (change)="cargarImagen($event)" accept="image/*">
-      </div>
+  <h2>Agregar Nueva Tecnología</h2>
+  <form (submit)="agregarTecnologia()">
+    <div class="mb-3">
+      <label for="nombre">Nombre</label>
+      <input type="text" class="form-control" id="nombre" [(ngModel)]="tecnologia.nombre" name="nombre" required>
+    </div>
 
-      <!-- Previsualización de la imagen -->
-      <div class="mb-3 text-center" *ngIf="imagenPreview">
-        <img [src]="imagenPreview" alt="Previsualización" class="img-thumbnail" style="max-width: 200px;">
-      </div>
+    <div class="mb-3">
+      <label for="descripcion">Descripción</label>
+      <textarea class="form-control" id="descripcion" [(ngModel)]="tecnologia.descripcion" name="descripcion" required></textarea>
+    </div>
 
-      <button type="submit" class="btn btn-primary">Añadir</button>
-      <a routerLink="/tecnologias" class="btn btn-secondary ms-2">Cancelar</a>
-    </form>
+    <div class="mb-3">
+      <label for="imagen">Imagen</label>
+      <input type="file" class="form-control" id="imagen" (change)="cargarImagen($event)" accept="image/*">
+    </div>
+
+    <div *ngIf="imagenPreview" class="mb-3 text-center">
+      <p>Vista previa:</p>
+      <img [src]="imagenPreview" alt="Vista previa de la imagen" class="img-thumbnail" width="150">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar Tecnología</button>
+  </form>
 </div>

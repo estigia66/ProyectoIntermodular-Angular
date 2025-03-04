@@ -14,7 +14,8 @@ import { RouterModule } from '@angular/router';
 export class TecnologiasEditarComponent implements OnInit {
   tecnologiaId: string | null = null;
   tecnologia = { nombre: '', descripcion: '', imagen: '' };
-  imagenPreview: string | ArrayBuffer | null = null;
+  imagenPreview: string | null = null;
+  nuevaImagen: File | null = null; // Para almacenar la nueva imagen
 
   constructor(
     private route: ActivatedRoute,
@@ -36,7 +37,7 @@ export class TecnologiasEditarComponent implements OnInit {
     
     if (docSnap.exists()) {
       this.tecnologia = docSnap.data() as any;
-      this.imagenPreview = this.tecnologia.imagen;
+      this.imagenPreview = this.tecnologia.imagen; // Mostrar la imagen actual
     } else {
       console.error('No se encontró la tecnología');
     }
@@ -45,14 +46,8 @@ export class TecnologiasEditarComponent implements OnInit {
   cargarImagen(event: any) {
     const file = event.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        if (e.target?.result !== undefined) {
-          this.imagenPreview = e.target.result;
-          this.tecnologia.imagen = e.target.result as string;
-        }
-      };
-      reader.readAsDataURL(file);
+      this.nuevaImagen = file; // Guardamos la nueva imagen
+      this.imagenPreview = `assets/imagenes/${file.name}`; // Vista previa con la ruta
     }
   }
 
@@ -64,7 +59,7 @@ export class TecnologiasEditarComponent implements OnInit {
       await updateDoc(docRef, { 
         nombre: this.tecnologia.nombre,
         descripcion: this.tecnologia.descripcion,
-        imagen: this.tecnologia.imagen
+        imagen: this.nuevaImagen ? `assets/imagenes/${this.nuevaImagen.name}` : this.tecnologia.imagen
       });
       
       console.log('Tecnología actualizada correctamente');
