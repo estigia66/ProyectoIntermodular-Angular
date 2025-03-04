@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ProyectoService {
-  private firestore: Firestore = inject(Firestore);
+  constructor(private firestore: Firestore) { }  
   private coleccionProyectos = 'proyectos'; // Nombre de la colección en Firestore
 
   // Obtener todos los proyectos con conversión de fechas

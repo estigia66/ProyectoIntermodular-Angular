@@ -1,0 +1,30 @@
+.container {
+    max-width: 900px;
+  }
+  
+  h2 {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .table {
+    margin-top: 10px;
+  }
+  
+  th, td {
+    vertical-align: middle !important;
+  }
+  
+  th {
+    text-transform: uppercase;
+    font-size: 14px;
+  }
+  
+  .btn-sm {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+  
+  .alert {
+    font-size: 16px;
+  }

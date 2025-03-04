@@ -1,0 +1,17 @@
+<div class="container mt-4">
+    <h2 class="text-center">Detalle de Factura</h2>
+    <div *ngIf="factura; else loading" class="card p-4 shadow-sm">
+      <h5 class="mb-3">Número de Factura: {{ factura.numeroFactura }}</h5>
+      <p><strong>Emisor:</strong> {{ factura.nombreEmisor }} ({{ factura.cifEmisor }})</p>
+      <p><strong>Receptor:</strong> {{ factura.nombreReceptor }} ({{ factura.cifReceptor }})</p>
+      <p><strong>Fecha:</strong> {{ factura.fechaFactura }}</p>
+      <p><strong>Base Imponible:</strong> {{ factura.baseImponible }} €</p>
+      <p><strong>IVA:</strong> {{ factura.tipoIva }} ({{ factura.cuotaIva }} €)</p>
+      <p><strong>Total:</strong> {{ factura.total }} €</p>
+      <p><strong>Descripción:</strong> {{ factura.descFactura }}</p>
+      <button class="btn btn-primary mt-3" routerLink="/facturas/{{ factura.proyectoId }}">Volver</button>
+    </div>
+    <ng-template #loading>
+      <p class="text-center">Cargando factura...</p>
+    </ng-template>
+  </div>

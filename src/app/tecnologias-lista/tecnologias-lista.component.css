@@ -1,0 +1,110 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 500px;
+  height: 400px; /* Asegura una altura uniforme */
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: 10px;
+  background: rgb(241, 241, 241);
+  transition: transform 0.3s ease-in-out;
+  position: relative;
+}
+.card:hover {
+  transform: scale(1.05); /* Pequeño efecto al pasar el mouse */
+}
+
+.img-tecnologia {
+  width: 100px; 
+  height: 100px;
+  object-fit: contain;
+  margin-bottom: 15px;
+}
+
+.card-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.card-text {
+  font-size: 0.9rem;
+  color: #666;
+  text-align: center;
+  min-height: 80px; /* Define un mínimo de altura */
+  overflow: hidden; /* Si el texto es muy largo, se oculta */
+  display: flex;
+  justify-content: center;
+}
+
+.card-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  position: absolute;
+  bottom: 10px; /* Fija los botones en la parte inferior */
+  left: 0;
+  right: 0;
+  padding: 10px;
+  background: rgb(241, 241, 241); /* Fondo para evitar que el texto lo empuje */
+}
+
+.btn {
+  padding: 8px 15px;
+  font-size: 0.9rem;
+  border-radius: 5px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+}
+.btn-primary:hover {
+  background-color: #0058b5; /* Azul más oscuro */
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border: none;
+}
+.btn-danger:hover {
+  background-color: #b71525; /* Rojo más oscuro */
+}
+
+@media (min-width: 1200px) {
+  .col-lg-2 {
+    flex: 0 0 auto;
+    width: 20%;
+  }
+}
+
+/* En tablets y pantallas medianas (3 por fila) */
+@media (max-width: 1199px) {
+  .col-lg-2 {
+    flex: 0 0 auto;
+    width: 33.33%;
+  }
+}
+
+/* En móviles (2 por fila) */
+@media (max-width: 768px) {
+  .col-lg-2 {
+    flex: 0 0 auto;
+    width: 50%;
+  }
+}

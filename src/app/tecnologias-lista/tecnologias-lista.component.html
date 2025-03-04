@@ -1,0 +1,22 @@
+<div class="container mt-4">
+  <div class="d-flex flex-column align-items-center gap-3 mb-4">
+    <h2 class="text-center flex-grow-1">Tecnologías</h2>
+    <a [routerLink]="['/tecnologias/nuevo']" class="btn btn-success">Añadir Tecnología</a>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-md-4 col-sm-6 mb-4" *ngFor="let tecnologia of tecnologias">
+      <div class="card">
+        <img [src]="tecnologia.imagenUrl" class="card-img-top img-tecnologia" alt="{{ tecnologia.nombre }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ tecnologia.nombre }}</h5>
+          <p class="card-text">{{ tecnologia.descripcion }}</p>
+          <div class="card-buttons">
+            <a [routerLink]="['/tecnologias/editar/', tecnologia.id]" class="btn btn-primary">Editar</a>
+            <button (click)="eliminarTecnologia(tecnologia.id)" class="btn btn-danger">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
