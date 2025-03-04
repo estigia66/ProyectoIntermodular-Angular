@@ -24,6 +24,7 @@ export class TecnologiasListaComponent implements OnInit {
         ...tecnologia,
         imagenUrl: tecnologia.imagenUrl || 'assets/imagenes/default.jpg' // Imagen por defecto si no hay imagen
       }));
+      this.tecnologias.sort((a, b) => a.nombre.localeCompare(b.nombre));
       console.log('Tecnologías cargadas:', this.tecnologias);
     });
   }
