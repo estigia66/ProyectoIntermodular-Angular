@@ -11,7 +11,10 @@ export class AuthService {
   private userSubject = new BehaviorSubject<Usuario | null>(null);
   user$ = this.userSubject.asObservable();
 
-  constructor(private auth: Auth, private firestore: Firestore) {
+  constructor(
+    private auth: Auth, 
+    private firestore: Firestore,
+  ) {
     onAuthStateChanged(this.auth, async (user) => {
       if (user) {
         console.log("Usuario autenticado tras recarga:", user.uid);
@@ -37,7 +40,7 @@ export class AuthService {
     this.userSubject.next(null);
   }
 
-  // 🔹 Registro con email, contraseña y datos adicionales
+  // Registro con email, contraseña y datos adicionales
   async register(nombre: string, apellidos: string, fechaNacimiento: string, email: string, password: string): Promise<any> {
     try {
       const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
@@ -55,7 +58,7 @@ export class AuthService {
 
       await updateProfile(user, { displayName: nombre });
 
-      // 🔹 Actualizar el estado global del usuario
+      // Actualizar el estado global del usuario
       this.updateUserState(user.uid);
 
       return user;
@@ -118,7 +121,7 @@ async getUserData(uid: string): Promise<Usuario | null> {
         rol: userData["rol"] || '',
         fechaNacimiento: userData["fechaNacimiento"]
           ? (userData["fechaNacimiento"] as Timestamp).toDate()
-          : null // 🔹 Conversión segura de Timestamp
+          : null // Conversión segura de Timestamp
       };
     } else {
       console.warn("No se encontraron datos para el usuario con UID:", uid);
