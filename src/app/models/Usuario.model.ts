@@ -4,6 +4,6 @@ export interface Usuario {
     nombre: string;
     apellidos: string;
     email: string;
-    fechaNacimiento: Date; 
+    fechaNacimiento: Date | null;
     rol: 'admin' | 'usuario';
   }

@@ -25,7 +25,7 @@
           <td>{{ proyecto.fechaFin }}</td>
           <td>{{ proyecto.tecnologias?.join(', ') }}</td>
           <td>
-            <button class="btn btn-info" (click)="verFacturas(proyecto.id)">Ver Facturas</button>
+            <button class="btn btn-sm btn-info me-2" (click)="verFacturas(proyecto.id)">Facturas</button>
             <!-- Enlace para editar -->
             <a [routerLink]="['/editar', proyecto.id]" class="btn btn-sm btn-info me-2">Editar</a>
             <!-- Botón para eliminar -->

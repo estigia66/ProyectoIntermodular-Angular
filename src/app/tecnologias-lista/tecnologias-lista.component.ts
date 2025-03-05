@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { TecnologiaService } from '../services/tecnologia.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-tecnologias-lista',
@@ -12,20 +13,29 @@ import { TecnologiaService } from '../services/tecnologia.service';
 export class TecnologiasListaComponent implements OnInit {
   tecnologias: any[] = [];
 
-  constructor(private tecnologiaService: TecnologiaService) {}
+  constructor(
+    private tecnologiaService: TecnologiaService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
-    this.cargarTecnologias();
+    this.authService.user$.subscribe(usuario => {
+      if (usuario) {
+        console.log('Usuario autenticado, cargando tecnologías...');
+        this.cargarTecnologias();
+      } else {
+        console.log('Esperando autenticación...');
+      }
+    });
   }
 
   cargarTecnologias(): void {
-    this.tecnologiaService.obtenerTecnologias().subscribe((data) => {
-      this.tecnologias = data.map(tecnologia => ({
-        ...tecnologia,
-        imagenUrl: tecnologia.imagenUrl || 'assets/imagenes/default.jpg' // Imagen por defecto si no hay imagen
-      }));
-      this.tecnologias.sort((a, b) => a.nombre.localeCompare(b.nombre));
-      console.log('Tecnologías cargadas:', this.tecnologias);
+    console.log('Cargando tecnologías...');
+    this.tecnologiaService.obtenerTecnologias().subscribe(data => {
+      console.log('Tecnologías cargadas:', data);
+      this.tecnologias = data.sort((a, b) => a.nombre.localeCompare(b.nombre));
+    }, error => {
+      console.error('Error obteniendo tecnologías:', error);
     });
   }
 
