@@ -9,20 +9,16 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class AuthService {
-  private userSubject = new BehaviorSubject<Usuario | null>(null);
-  user$: Observable<Usuario | null> = this.userSubject.asObservable();
+  private userSubject = new BehaviorSubject<Usuario | null | undefined>(undefined);
+  user$ = this.userSubject.asObservable();
 
   constructor(private auth: Auth, private firestore: Firestore) {
     onAuthStateChanged(this.auth, async (user) => {
       if (user) {
-        console.log("Usuario autenticado:", user.uid);
+        console.log("Usuario autenticado tras recarga:", user.uid);
         const userData = await this.getUserData(user.uid);
-        
         if (userData) {
-          console.log("Datos cargados en BehaviorSubject:", userData);
           this.userSubject.next(userData);
-        } else {
-          console.warn("No se encontraron datos de usuario en Firestore.");
         }
       } else {
         console.warn("No hay usuario autenticado.");
@@ -40,11 +36,6 @@ export class AuthService {
   // Logout
   logout(): Promise<void> {
     return signOut(this.auth);
-  }
-
-  // Obtener usuario actual
-  getUsuarioActual(): Usuario | null {
-    return this.userSubject.value;
   }
 
   // Registro con email, contraseña y datos adicionales
@@ -74,29 +65,38 @@ export class AuthService {
     }
   }
 
-  // Método para iniciar sesión con Google
-  async loginWithGoogle(): Promise<UserCredential> {
+  /// Método para iniciar sesión con Google
+  async loginWithGoogle() {
     try {
       const provider = new GoogleAuthProvider();
-      const userCredential = await signInWithPopup(this.auth, provider);
+      const credential = await signInWithPopup(this.auth, provider);
+      const user = credential.user;
       
-      // Guardamos el usuario en Firestore si es la primera vez
-      const user = userCredential.user;
+      console.log("Usuario autenticado con Google:", user);
+
       if (user) {
-        const userRef = doc(this.firestore, `usuarios/${user.uid}`);
-        await setDoc(userRef, {
-          uid: user.uid,
-          nombre: user.displayName || '',
-          email: user.email,
-          photoURL: user.photoURL || '',
-          rol: 'usuario'
-        }, { merge: true }); // No sobreescribe si ya existe
+        await this.checkAndSaveUser(user);
+        this.userSubject.next(await this.getUserData(user.uid));
       }
-      
-      return userCredential;
     } catch (error) {
-      console.error("Error en el login con Google:", error);
-      throw error;
+      console.error('Error en login con Google:', error);
+    }
+  }
+
+  private async checkAndSaveUser(user: User) {
+    const userRef = doc(this.firestore, `usuarios/${user.uid}`);
+    const userSnapshot = await getDoc(userRef);
+
+    if (userSnapshot.exists()) {
+      console.log("El usuario ya existe, manteniendo su rol actual.");
+    } else {
+      console.log("Nuevo usuario, registrando en Firestore con rol 'usuario'.");
+      await setDoc(userRef, {
+        uid: user.uid,
+        nombre: user.displayName,
+        email: user.email,
+        rol: "usuario" // Solo se asigna si el usuario es nuevo
+      });
     }
   }
   // Obtener datos adicionales del usuario desde Firestore
