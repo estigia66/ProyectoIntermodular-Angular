@@ -2,21 +2,30 @@ import { Injectable, inject } from '@angular/core';
 import { Firestore, doc, getDoc, setDoc, Timestamp } from '@angular/fire/firestore';
 import { Auth, User, UserCredential, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { Usuario } from '../models/Usuario.model';
 import { environment } from '../../environments/environment'; 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private userSubject = new BehaviorSubject<any | null>(null);
-  user$: Observable<any | null> = this.userSubject.asObservable();
+  private userSubject = new BehaviorSubject<Usuario | null>(null);
+  user$: Observable<Usuario | null> = this.userSubject.asObservable();
 
   constructor(private auth: Auth, private firestore: Firestore) {
     onAuthStateChanged(this.auth, async (user) => {
       if (user) {
+        console.log("Usuario autenticado:", user.uid);
         const userData = await this.getUserData(user.uid);
-        this.userSubject.next(userData);
+        
+        if (userData) {
+          console.log("Datos cargados en BehaviorSubject:", userData);
+          this.userSubject.next(userData);
+        } else {
+          console.warn("No se encontraron datos de usuario en Firestore.");
+        }
       } else {
+        console.warn("No hay usuario autenticado.");
         this.userSubject.next(null);
       }
     });
@@ -34,7 +43,7 @@ export class AuthService {
   }
 
   // Obtener usuario actual
-  getUsuarioActual(): any | null {
+  getUsuarioActual(): Usuario | null {
     return this.userSubject.value;
   }
 
@@ -91,14 +100,32 @@ export class AuthService {
     }
   }
   // Obtener datos adicionales del usuario desde Firestore
-  async getUserData(uid: string): Promise<any | null> {
+  async getUserData(uid: string): Promise<Usuario | null> {
     try {
       const userRef = doc(this.firestore, `usuarios/${uid}`);
       const userSnapshot = await getDoc(userRef);
-
+  
       if (userSnapshot.exists()) {
-        return { uid, ...userSnapshot.data() };
+        const userData = userSnapshot.data();
+  
+        console.log("Datos obtenidos de Firestore:", userData);
+  
+        // Accedemos a fechaNacimiento usando notación de corchetes
+      const fechaNacimiento = userData["fechaNacimiento"];
+
+      // Convertimos fechaNacimiento si es un Timestamp
+      if (fechaNacimiento instanceof Timestamp) {
+        userData["fechaNacimiento"] = fechaNacimiento.toDate();
+      } else if (typeof fechaNacimiento === "string" || typeof fechaNacimiento === "number") {
+        userData["fechaNacimiento"] = new Date(fechaNacimiento);
       } else {
+        console.warn("El formato de fechaNacimiento es inesperado:", fechaNacimiento);
+        userData["fechaNacimiento"] = null; // Para evitar problemas en la plantilla
+      }
+  
+        return userData as Usuario;
+      } else {
+        console.warn("No se encontraron datos para el usuario con UID:", uid);
         return null;
       }
     } catch (error) {

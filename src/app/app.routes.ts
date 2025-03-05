@@ -9,6 +9,7 @@ import { FacturasListaComponent } from './facturas-lista/facturas-lista.componen
 import { FacturasDetalleComponent } from './facturas-detalle/facturas-detalle.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/registro/registro.component';
+import { PerfilComponent } from './perfil/perfil.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'lista', pathMatch: 'full' }, // Redirige '/' a '/lista'
@@ -26,5 +27,8 @@ export const routes: Routes = [
 
   // Rutas para el login y registro
   { path: 'login', component: LoginComponent }, // Ruta para el login
-  { path: 'register', component: RegisterComponent } // Ruta para el registro
+  { path: 'register', component: RegisterComponent }, // Ruta para el registro
+
+  { path: 'perfil', component: PerfilComponent }
+  
 ];

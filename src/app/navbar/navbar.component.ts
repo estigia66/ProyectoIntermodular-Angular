@@ -20,9 +20,10 @@ export class NavbarComponent implements OnInit {
   }
 
   verificarRol(): void {
-    this.authService.getUsuarioActual().subscribe((usuario: Usuario | null) => {
-      this.esAdmin = usuario?.rol === 'admin';
-    });
+    const usuario = this.authService.getUsuarioActual();
+    if (usuario) {
+      this.esAdmin = usuario.rol === 'admin';
+    }
   }
 
   cerrarSesion(): void {
