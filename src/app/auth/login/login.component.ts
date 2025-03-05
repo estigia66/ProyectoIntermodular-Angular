@@ -42,7 +42,7 @@ export class LoginComponent {
     this.authService.loginWithGoogle()
       .then(() => {
         console.log("Inicio de sesión con Google exitoso");
-        this.router.navigate(['/proyectos']); // Redirige a la lista de proyectos o donde necesites
+        this.router.navigate(['/']);
       })
       .catch(error => {
         console.error("Error al iniciar sesión con Google:", error);

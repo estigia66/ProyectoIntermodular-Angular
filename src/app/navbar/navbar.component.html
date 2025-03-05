@@ -1,27 +1,27 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Mi Aplicación</a>
-  
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-  
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/proyectos" routerLinkActive="active">Proyectos</a>
-          </li>
-          <li class="nav-item" *ngIf="esAdmin">
-            <a class="nav-link" routerLink="/tecnologias" routerLinkActive="active">Tecnologías</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/perfil" routerLinkActive="active">Perfil</a>
-          </li>
-          <li class="nav-item">
-            <button class="btn btn-danger btn-sm" (click)="cerrarSesion()">Cerrar sesión</button>
-          </li>
-        </ul>
-      </div>
+  <div class="container-fluid">
+    <a class="navbar-brand">Mi Aplicación</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/lista']" routerLinkActive="active">Proyectos</a>
+        </li>
+        <li class="nav-item" *ngIf="esAdmin">
+          <a class="nav-link" [routerLink]="['/tecnologias']" routerLinkActive="active">Tecnologías</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/perfil']" routerLinkActive="active">Perfil</a>
+        </li>
+        <li class="nav-item">
+          <button class="btn btn-danger btn-sm" (click)="cerrarSesion()">Cerrar sesión</button>
+        </li>
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>
