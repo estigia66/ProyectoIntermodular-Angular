@@ -1,19 +1,20 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore, collectionData, docData, addDoc, updateDoc, deleteDoc, doc, collection, Timestamp } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, delay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProyectoService {
-  constructor(private firestore: Firestore) { }  
+  private firestore = inject(Firestore);
   private coleccionProyectos = 'proyectos'; // Nombre de la colección en Firestore
 
   // Obtener todos los proyectos con conversión de fechas
   obtenerProyectos(): Observable<any[]> {
     const proyectosRef = collection(this.firestore, this.coleccionProyectos);
     return collectionData(proyectosRef, { idField: 'id' }).pipe(
+      delay(0), // 🔹 Evita la ejecución fuera del contexto de Angular
       map((proyectos: any[]) => proyectos.map(proyecto => ({
         ...proyecto,
         fechaInicio: this.convertirFecha(proyecto['fechaInicio']),

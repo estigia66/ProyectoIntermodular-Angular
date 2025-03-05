@@ -19,7 +19,7 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent }, // Ruta para el registro
 
   // Rutas protegidas (requieren autenticación)
-  { path: 'lista', component: ProyectosListaComponent, canActivate: [AuthGuard] }, // Ruta para listar proyectos
+  { path: '', component: ProyectosListaComponent, canActivate: [AuthGuard] }, // Ruta para listar proyectos
   { path: 'nuevo', component: ProyectosNuevoComponent, canActivate: [AuthGuard] }, // Ruta para crear un nuevo proyecto
   { path: 'editar/:id', component: ProyectosEditarComponent, canActivate: [AuthGuard] }, // Ruta para editar un proyecto existente
 

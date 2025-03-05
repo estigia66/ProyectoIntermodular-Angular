@@ -6,7 +6,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class TecnologiaService {
-  private firestore = inject(Firestore);
+  private firestore: Firestore;
+
+  constructor() {
+    this.firestore = inject(Firestore); // Inyección dentro del constructor
+  }
   private coleccionTecnologias = 'tecnologias'; // Nombre de la colección en Firestore
 
   // Obtener todas las tecnologías
