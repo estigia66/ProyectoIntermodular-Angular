@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject, NgZone } from '@angular/core';
 import { Firestore, doc, getDoc, setDoc, Timestamp } from '@angular/fire/firestore';
-import { Auth, UserCredential, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
+import { Auth, authState, UserCredential, signInWithEmailAndPassword, signOut, updateProfile, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
 import { BehaviorSubject } from 'rxjs';
 import { Usuario } from '../models/Usuario.model';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -11,33 +12,47 @@ export class AuthService {
   private userSubject = new BehaviorSubject<Usuario | null>(null);
   user$ = this.userSubject.asObservable();
 
-  constructor(
-    private auth: Auth, 
-    private firestore: Firestore,
-  ) {
-    onAuthStateChanged(this.auth, async (user) => {
-      if (user) {
-        console.log("Usuario autenticado tras recarga:", user.uid);
-        const userData = await this.getUserData(user.uid);
-        this.userSubject.next(userData);
-      } else {
-        console.warn("No hay usuario autenticado.");
-        this.userSubject.next(null);
-      }
+  private auth = inject(Auth);
+  private firestore = inject(Firestore);
+  private router = inject(Router);
+  private ngZone = inject(NgZone); // Inyectamos NgZone para solucionar el error
+
+  constructor() {
+    // Usar authState en lugar de AngularFireAuth y ejecutar en la zona de Angular
+    authState(this.auth).subscribe(async (user) => {
+      this.ngZone.run(async () => { // Se ejecuta dentro de Angular
+        if (user) {
+          console.log("Usuario autenticado tras recarga:", user.uid);
+          const userData = await this.getUserData(user.uid);
+          this.userSubject.next(userData);
+        } else {
+          console.warn("No hay usuario autenticado.");
+          this.userSubject.next(null);
+        }
+      });
     });
   }
 
-  // Método para iniciar sesión con email y contraseña
+  // Método para iniciar sesión con email y contraseña con NgZone para redirección
   async login(email: string, password: string): Promise<UserCredential> {
     const credential = await signInWithEmailAndPassword(this.auth, email, password);
     this.updateUserState(credential.user.uid);
+
+    // Forzar la redirección dentro de la zona de Angular
+    this.ngZone.run(() => {
+      this.router.navigate(['/']); // Redirige correctamente
+    });
+
     return credential;
   }
 
-  // Cerrar sesión
+  // Cerrar sesión dentro de la zona de Angular
   async logout(): Promise<void> {
     await signOut(this.auth);
-    this.userSubject.next(null);
+    this.ngZone.run(() => {
+      this.userSubject.next(null);
+      this.router.navigate(['/login']); // Opcional, redirigir al login después de logout
+    });
   }
 
   // Registro con email, contraseña y datos adicionales
@@ -58,8 +73,12 @@ export class AuthService {
 
       await updateProfile(user, { displayName: nombre });
 
-      // Actualizar el estado global del usuario
       this.updateUserState(user.uid);
+
+      // Redirigir correctamente después de registrarse
+      this.ngZone.run(() => {
+        this.router.navigate(['/']);
+      });
 
       return user;
     } catch (error) {
@@ -74,12 +93,17 @@ export class AuthService {
       const provider = new GoogleAuthProvider();
       const credential = await signInWithPopup(this.auth, provider);
       const user = credential.user;
-      
+
       console.log("Usuario autenticado con Google:", user);
 
       if (user) {
         await this.checkAndSaveUser(user);
         this.updateUserState(user.uid);
+
+        // Redirigir correctamente después de login con Google
+        this.ngZone.run(() => {
+          this.router.navigate(['/proyectos']);
+        });
       }
     } catch (error) {
       console.error('Error en login con Google:', error);
@@ -102,40 +126,42 @@ export class AuthService {
     }
   }
 
-// Método para obtener datos del usuario
-async getUserData(uid: string): Promise<Usuario | null> {
-  try {
-    const userRef = doc(this.firestore, `usuarios/${uid}`);
-    const userSnapshot = await getDoc(userRef);
+  // Método para obtener datos del usuario
+  async getUserData(uid: string): Promise<Usuario | null> {
+    try {
+      const userRef = doc(this.firestore, `usuarios/${uid}`);
+      const userSnapshot = await getDoc(userRef);
 
-    if (userSnapshot.exists()) {
-      const userData = userSnapshot.data();
+      if (userSnapshot.exists()) {
+        const userData = userSnapshot.data();
 
-      console.log("Datos obtenidos de Firestore:", userData);
+        console.log("Datos obtenidos de Firestore:", userData);
 
-      return {
-        uid: userData["uid"],
-        nombre: userData["nombre"] || '',
-        apellidos: userData["apellidos"] || '',
-        email: userData["email"] || '',
-        rol: userData["rol"] || '',
-        fechaNacimiento: userData["fechaNacimiento"]
-          ? (userData["fechaNacimiento"] as Timestamp).toDate()
-          : null // Conversión segura de Timestamp
-      };
-    } else {
-      console.warn("No se encontraron datos para el usuario con UID:", uid);
+        return {
+          uid: userData["uid"],
+          nombre: userData["nombre"] || '',
+          apellidos: userData["apellidos"] || '',
+          email: userData["email"] || '',
+          rol: userData["rol"] || '',
+          fechaNacimiento: userData["fechaNacimiento"]
+            ? (userData["fechaNacimiento"] as Timestamp).toDate()
+            : null
+        };
+      } else {
+        console.warn("No se encontraron datos para el usuario con UID:", uid);
+        return null;
+      }
+    } catch (error) {
+      console.error("Error al obtener datos del usuario:", error);
       return null;
     }
-  } catch (error) {
-    console.error("Error al obtener datos del usuario:", error);
-    return null;
   }
-}
 
   // Método para actualizar el estado global del usuario
   private async updateUserState(uid: string) {
     const userData = await this.getUserData(uid);
-    this.userSubject.next(userData);
+    this.ngZone.run(() => { // Se ejecuta dentro de Angular
+      this.userSubject.next(userData);
+    });
   }
 }

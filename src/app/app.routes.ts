@@ -13,7 +13,7 @@ import { PerfilComponent } from './perfil/perfil.component';
 import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
-  //{ path: '', redirectTo: 'login', pathMatch: 'full' },
+
   // Rutas para el login y registro
   { path: 'login', component: LoginComponent }, // Ruta para el login
   { path: 'register', component: RegisterComponent }, // Ruta para el registro
@@ -32,7 +32,5 @@ export const routes: Routes = [
   { path: 'tecnologias/editar/:id', component: TecnologiasEditarComponent, canActivate: [AuthGuard] }, // Ruta para editar una tecnología existente
 
   { path: 'perfil', component: PerfilComponent, canActivate: [AuthGuard] }, // Ruta para ver el perfil del usuario
-
-
   
 ];
