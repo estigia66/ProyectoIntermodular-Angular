@@ -15,7 +15,7 @@ export class AuthService {
   private auth = inject(Auth);
   private firestore = inject(Firestore);
   private router = inject(Router);
-  private ngZone = inject(NgZone); // Inyectamos NgZone para solucionar el error
+  private ngZone = inject(NgZone);
 
   constructor() {
     // Usar authState en lugar de AngularFireAuth y ejecutar en la zona de Angular
@@ -40,7 +40,7 @@ export class AuthService {
 
     // Forzar la redirección dentro de la zona de Angular
     this.ngZone.run(() => {
-      this.router.navigate(['/']); // Redirige correctamente
+      this.router.navigate(['/proyectos']);
     });
 
     return credential;
@@ -51,7 +51,7 @@ export class AuthService {
     await signOut(this.auth);
     this.ngZone.run(() => {
       this.userSubject.next(null);
-      this.router.navigate(['/login']); // Opcional, redirigir al login después de logout
+      this.router.navigate(['/login']);
     });
   }
 
@@ -77,7 +77,7 @@ export class AuthService {
 
       // Redirigir correctamente después de registrarse
       this.ngZone.run(() => {
-        this.router.navigate(['/']);
+        this.router.navigate(['/proyectos']);
       });
 
       return user;

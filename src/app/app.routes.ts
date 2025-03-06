@@ -19,9 +19,9 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent }, // Ruta para el registro
 
   // Rutas protegidas (requieren autenticación)
-  { path: '', component: ProyectosListaComponent, canActivate: [AuthGuard] }, // Ruta para listar proyectos
-  { path: 'nuevo', component: ProyectosNuevoComponent, canActivate: [AuthGuard] }, // Ruta para crear un nuevo proyecto
-  { path: 'editar/:id', component: ProyectosEditarComponent, canActivate: [AuthGuard] }, // Ruta para editar un proyecto existente
+  { path: 'proyectos', component: ProyectosListaComponent, canActivate: [AuthGuard] }, // Ruta para listar proyectos
+  { path: 'proyectos/nuevo', component: ProyectosNuevoComponent, canActivate: [AuthGuard] }, // Ruta para crear un nuevo proyecto
+  { path: 'proyectos/editar/:id', component: ProyectosEditarComponent, canActivate: [AuthGuard] }, // Ruta para editar un proyecto existente
 
   { path: 'facturas/:idProyecto', component: FacturasListaComponent, canActivate: [AuthGuard] }, // Ruta para listar facturas
   { path: 'facturas/detalle/:idFactura', component: FacturasDetalleComponent, canActivate: [AuthGuard] }, // Ruta para ver el detalle de una factura
@@ -33,4 +33,9 @@ export const routes: Routes = [
 
   { path: 'perfil', component: PerfilComponent, canActivate: [AuthGuard] }, // Ruta para ver el perfil del usuario
   
+  // Redirigir la raíz a /proyectos
+  { path: '', redirectTo: 'proyectos', pathMatch: 'full' }, 
+
+  // Redirigir cualquier ruta desconocida a /proyectos
+  { path: '**', redirectTo: 'proyectos' }
 ];
