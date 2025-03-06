@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { Observable } from 'rxjs';
-import { map, filter, take } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, take, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -13,13 +13,19 @@ export class AuthGuard implements CanActivate {
 
   canActivate(): Observable<boolean> {
     return this.authService.user$.pipe(
-      filter(user => user !== undefined), // Espera hasta que Firebase termine la verificación
-      take(1), // Solo toma el primer valor emitido
+      switchMap(user => {
+        if (user === undefined) {
+          return of(false); // Evita que Angular redirija antes de que Firebase cargue el usuario
+        }
+        return of(!!user);
+      }),
+      take(1),
       map(user => {
         if (user) {
-          return true; // Permite el acceso si hay usuario autenticado
+          return true; // Usuario autenticado, permite acceso
         } else {
-          this.router.navigate(['/login']);
+          console.warn('Usuario no autenticado, redirigiendo al login');
+          this.router.navigate(['/login']); // 🔄 Redirigir solo si Firebase confirma que no hay sesión
           return false;
         }
       })

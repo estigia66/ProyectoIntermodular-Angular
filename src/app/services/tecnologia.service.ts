@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Firestore, collection, addDoc, collectionData, deleteDoc, doc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
@@ -6,12 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class TecnologiaService {
-  private firestore: Firestore;
-
-  constructor() {
-    this.firestore = inject(Firestore); // Inyección dentro del constructor
-  }
   private coleccionTecnologias = 'tecnologias'; // Nombre de la colección en Firestore
+
+  constructor(private firestore: Firestore) {}
 
   // Obtener todas las tecnologías
   obtenerTecnologias(): Observable<any[]> {
