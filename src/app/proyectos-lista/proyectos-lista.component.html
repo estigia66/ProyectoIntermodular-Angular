@@ -27,7 +27,7 @@
           <td>
             <button class="btn btn-sm btn-info me-2" (click)="verFacturas(proyecto.id)">Facturas</button>
             <!-- Enlace para editar -->
-            <a [routerLink]="['/editar', proyecto.id]" class="btn btn-sm btn-info me-2">Editar</a>
+            <a [routerLink]="['/proyectos/editar', proyecto.id]" class="btn btn-sm btn-info me-2">Editar</a>
             <!-- Botón para eliminar -->
             <button (click)="eliminarProyecto(proyecto.id)" class="btn btn-sm btn-danger">Eliminar</button>
           </td>
@@ -42,5 +42,5 @@
   </ng-template>
 
   <!-- Botón para crear un nuevo proyecto -->
-  <a routerLink="/nuevo" class="btn btn-primary mt-3">Nuevo Proyecto</a>
+  <a routerLink="/proyectos/nuevo" class="btn btn-primary mt-3">Nuevo Proyecto</a>
 </div>
