@@ -14,7 +14,7 @@ import { ProyectoService } from '../services/proyecto.service';
 export class ProyectosEditarComponent implements OnInit {
   formularioProyecto !: FormGroup;
   idProyecto!: string | null;
-  estados = ['Pendiente', 'En progreso', 'Terminado', 'Cancelado'];
+  estados = ['pendiente', 'en progreso', 'completado', 'cancelado'];
 
   constructor(
     private fb: FormBuilder,
@@ -47,7 +47,7 @@ export class ProyectosEditarComponent implements OnInit {
             this.formularioProyecto.patchValue({
               nombre: proyecto.nombre,
               descripcion: proyecto.descripcion,
-              estado: proyecto.estado,
+              estado: proyecto.estado.toLowerCase(),
               fechaInicio: new Date(proyecto.fechaInicio).toISOString().split('T')[0],
               fechaFin: proyecto.fechaFin ? new Date(proyecto.fechaFin).toISOString().split('T')[0] : '',
               tecnologias: proyecto.tecnologias ? proyecto.tecnologias.join(', ') : ''

@@ -20,7 +20,19 @@
         <tr *ngFor="let proyecto of proyectos">
           <td>{{ proyecto.nombre }}</td>
           <td>{{ proyecto.descripcion }}</td>
-          <td>{{ proyecto.estado }}</td>
+          <!-- Estado con colores dinámicos -->
+          <td>
+            <span [ngClass]="{
+              'estado-completado': proyecto.estado === 'completado',
+              'estado-pendiente': proyecto.estado === 'pendiente',
+              'estado-en-proceso': proyecto.estado === 'en progreso',
+              'estado-cancelado': proyecto.estado === 'cancelado'
+              }">
+              {{ proyecto.estado }}
+            </span>
+
+          </td>
+
           <td>{{ proyecto.fechaInicio }}</td>
           <td>{{ proyecto.fechaFin }}</td>
           <td>{{ proyecto.tecnologias?.join(', ') }}</td>

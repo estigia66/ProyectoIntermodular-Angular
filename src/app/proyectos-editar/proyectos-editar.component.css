@@ -1,0 +1,21 @@
+.estado-completado {
+    color: green;
+  }
+  
+  .estado-pendiente {
+    color: red;
+  }
+  
+  .estado-en-proceso {
+    color: orange;
+  }
+  
+  .estado-cancelado {
+    color: gray;
+  }
+  
+  /* Estilo para el select */
+  select option {
+    color: initial; 
+  }
+  

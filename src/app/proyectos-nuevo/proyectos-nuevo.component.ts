@@ -27,17 +27,17 @@ export class ProyectosNuevoComponent implements OnInit {
     this.formularioProyecto = this.fb.group({
       nombre: ['', Validators.required],
       descripcion: ['', Validators.required],
-      estado: ['pendiente', Validators.required],
+      estado: ['pendiente', Validators.required], // Estado por defecto
       fechaInicio: ['', Validators.required],
       fechaFin: [''],
       tecnologias: [[]]
     });
 
     // Cargar tecnologías desde Firestore
-    this.tecnologiaService.obtenerTecnologias().subscribe(tecnologias => {
-      this.tecnologiasDisponibles = tecnologias;
-    });
-  }
+  this.tecnologiaService.obtenerTecnologias().subscribe(tecnologias => {
+    this.tecnologiasDisponibles = tecnologias;
+  });
+}
 
   agregarProyecto(){
     if (this.formularioProyecto.valid){
