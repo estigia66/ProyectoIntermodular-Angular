@@ -12,11 +12,16 @@ import { RegisterComponent } from './auth/registro/registro.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { AuthGuard } from './guards/auth.guard';
 
+
+
+
 export const routes: Routes = [
 
   // Rutas para el login y registro
   { path: 'login', component: LoginComponent }, // Ruta para el login
   { path: 'register', component: RegisterComponent }, // Ruta para el registro
+
+  //Ruta para el dashboard (protegida)
 
   // Rutas protegidas (requieren autenticación)
   { path: 'proyectos', component: ProyectosListaComponent, canActivate: [AuthGuard] }, // Ruta para listar proyectos
