@@ -7,7 +7,7 @@ import { collectionData } from 'rxfire/firestore';
   providedIn: 'root'
 })
 export class FacturaService {
-  private collectionName = 'facturas';
+  private collectionName = 'facturasEmitidas';
 
   constructor(private firestore: Firestore) {}
 
@@ -27,9 +27,8 @@ export class FacturaService {
 
   // Obtener una factura por su ID
   obtenerFacturaPorId(idFactura: string): Observable<any> {
-    const facturaRef = doc(this.firestore, `facturas/${idFactura}`);
+    const facturaRef = doc(this.firestore, `facturasEmitidas/${idFactura}`);
     return docData(facturaRef, { idField: 'id' });
   }
-
 
 }

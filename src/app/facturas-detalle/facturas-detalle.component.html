@@ -2,16 +2,58 @@
     <h2 class="text-center">Detalle de Factura</h2>
     <div *ngIf="factura; else loading" class="card p-4 shadow-sm">
       <h5 class="mb-3">Número de Factura: {{ factura.numeroFactura }}</h5>
-      <p><strong>Emisor:</strong> {{ factura.nombreEmisor }} ({{ factura.cifEmisor }})</p>
-      <p><strong>Receptor:</strong> {{ factura.nombreReceptor }} ({{ factura.cifReceptor }})</p>
-      <p><strong>Fecha:</strong> {{ factura.fechaFactura }}</p>
-      <p><strong>Base Imponible:</strong> {{ factura.baseImponible }} €</p>
-      <p><strong>IVA:</strong> {{ factura.tipoIva }} ({{ factura.cuotaIva }} €)</p>
-      <p><strong>Total:</strong> {{ factura.total }} €</p>
-      <p><strong>Descripción:</strong> {{ factura.descFactura }}</p>
+      
+      <table class="table">
+        <tbody>
+          <tr>
+            <th scope="row">Estado:</th>
+            <td>{{ factura.estado }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Proyecto Asociado:</th>
+            <td>{{ factura.proyecto }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Fecha de Emisión:</th>
+            <td>{{ factura.fechaEmision }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h5 class="mt-4">Detalles del Emisor</h5>
+      <p><strong>Nombre:</strong> {{ factura.nombreEmisor }}</p>
+      <p><strong>CIF:</strong> {{ factura.cifEmisor }}</p>
+      <p><strong>Dirección:</strong> {{ factura.direccionEmisor }}</p>
+
+      <h5 class="mt-4">Detalles del Receptor</h5>
+      <p><strong>Nombre:</strong> {{ factura.nombreReceptor }}</p>
+      <p><strong>CIF:</strong> {{ factura.cifReceptor }}</p>
+      <p><strong>Dirección:</strong> {{ factura.direccionReceptor }}</p>
+
+      <h5 class="mt-4">Resumen de Factura</h5>
+      <table class="table">
+        <tbody>
+          <tr>
+            <th scope="row">Base Imponible:</th>
+            <td>{{ factura.baseImponible }} €</td>
+          </tr>
+          <tr>
+            <th scope="row">IVA ({{ factura.tipoIva }}%):</th>
+            <td>{{ factura.cuotaIva }} €</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="border-top pt-3">
+        <h4 class="text-end">Total: {{ factura.total }} €</h4>
+      </div>
+
+      <p class="mt-3"><strong>Descripción:</strong> {{ factura.descFactura }}</p>
+
       <button class="btn btn-primary mt-3" routerLink="/facturas/{{ factura.proyectoId }}">Volver</button>
     </div>
+
     <ng-template #loading>
       <p class="text-center">Cargando factura...</p>
     </ng-template>
-  </div>
+</div>
