@@ -27,7 +27,7 @@ export class FacturaService {
 
   // Obtener una factura por su ID
   obtenerFacturaPorId(idFactura: string): Observable<any> {
-    const facturaRef = doc(this.firestore, `facturas/${idFactura}`);
+    const facturaRef = doc(this.firestore, `facturasEmitidas/${idFactura}`);
     return docData(facturaRef, { idField: 'id' });
   }
 
