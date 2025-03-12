@@ -18,9 +18,8 @@ export class AuthService {
   private ngZone = inject(NgZone);
 
   constructor() {
-    // Usar authState en lugar de AngularFireAuth y ejecutar en la zona de Angular
     authState(this.auth).subscribe(async (user) => {
-      this.ngZone.run(async () => { // Se ejecuta dentro de Angular
+      this.ngZone.run(async () => { 
         if (user) {
           console.log("Usuario autenticado tras recarga:", user.uid);
           const userData = await this.getUserData(user.uid);
@@ -28,6 +27,7 @@ export class AuthService {
         } else {
           console.warn("No hay usuario autenticado.");
           this.userSubject.next(null);
+          this.router.navigate(['/login']); // Redirigir solo si Firebase confirma que no hay sesión
         }
       });
     });

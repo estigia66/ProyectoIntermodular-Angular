@@ -34,8 +34,8 @@ export const routes: Routes = [
   { path: 'perfil', component: PerfilComponent, canActivate: [AuthGuard] }, // Ruta para ver el perfil del usuario
   
   // Redirigir la raíz a /proyectos
-  { path: '', redirectTo: 'proyectos', pathMatch: 'full' }, 
-
+  { path: '', redirectTo: 'proyectos', pathMatch: 'full' },
+  
   // Redirigir cualquier ruta desconocida a /proyectos
   { path: '**', redirectTo: 'proyectos' }
 ];
