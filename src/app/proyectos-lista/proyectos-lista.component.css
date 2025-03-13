@@ -21,9 +21,9 @@
 
 /* Ajuste para centrar contenido y mejorar el diseño */
 .container {
-  max-width: 95%;
+  max-width: 99%;
   margin: 0 auto;
-  padding: 20px;
+  padding: 10px;
 }
 
 /* Hace la tabla responsive */
@@ -35,26 +35,28 @@
 /* Estilos de tabla */
 table {
   width: 100%;
-  border-collapse: collapse;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-collapse: separate;
+  border-spacing: 0 5px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-th, td {
-  padding: 12px;
-  text-align: center;
-  white-space: nowrap;
-}
 
 th {
-  background-color: #f8f9fa;
+  background-color: #e9ecef;
   font-weight: bold;
+  text-align: left;
+  padding: 12px;
 }
 
 /* Botones más compactos */
 .btn-sm {
-  font-size: 0.9rem;
-  padding: 5px 10px;
+  font-size: 0.85rem;
+  padding: 5px 8px;
   border-radius: 5px;
+  margin-bottom: 5%;
+  margin-top: 5%;
 }
 
 /* Ajustes responsivos */
@@ -64,9 +66,11 @@ th {
   }
 
   .btn-sm {
-    font-size: 0.8rem;
-    padding: 5px 8px;
-  }
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin: 4px 0;
+}
 
   h2 {
     font-size: 1.5rem;
@@ -86,4 +90,66 @@ th {
   h2 {
     font-size: 1.3rem;
   }
+}
+
+/* Definir anchos máximos para cada columna */
+th:nth-child(1), td:nth-child(1) { /* Nombre */
+  max-width: 150px;
+  white-space: normal;  /* Permitir saltos de línea */
+  overflow: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+th:nth-child(2), td:nth-child(2) { /* Descripción */
+  max-width: 250px;
+  overflow: hidden;
+  white-space: normal;  /* Permitir saltos de línea */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+th:nth-child(3), td:nth-child(3) { /* Estado */
+  max-width: 120px;
+  white-space: nowrap;
+}
+
+th:nth-child(4), td:nth-child(4), 
+th:nth-child(5), td:nth-child(5) { /* Fechas */
+  max-width: 130px;
+  white-space: nowrap;
+}
+
+th:nth-child(6), td:nth-child(6) { /* Tecnologías */
+  max-width: 200px;
+  white-space: normal;  /* Permitir saltos de línea */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Ajustar la columna de acciones */
+th:nth-child(7), td:nth-child(7) { /* Acciones */
+  max-width: 280px;
+  text-align: center;
+}
+
+/* Forzar alineación vertical de los botones */
+td:nth-child(7) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+  padding: 10px;
+  max-width: 100%;
+}
+
+td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
 }

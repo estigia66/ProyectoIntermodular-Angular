@@ -14,7 +14,7 @@
   align-items: center;
   width: 100%;
   max-width: 350px;
-  height: 320px; /* Asegura una altura uniforme */
+  height: 350px; /* Asegura una altura uniforme */
   padding: 12px;
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

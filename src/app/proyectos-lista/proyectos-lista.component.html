@@ -1,14 +1,15 @@
-<div class="container mt-5">
-  <h2 class="text-center">Proyectos</h2>
-
-  <!-- Botón para crear un nuevo proyecto -->
-  <div class="text-center">
+<div class="container mt-2">
+  <div class="row">
+    <div class="col text-center">
+      <h1>Proyectos</h1>
+    </div>
+  </div>
+  <div class="text-center mt-2 mb-4">
     <a routerLink="/proyectos/nuevo" class="btn btn-success">Nuevo Proyecto</a>
   </div>
-
   <!-- Verifica si hay proyectos -->
-  <div class="table-responsive" *ngIf="proyectos.length > 0; else noProyectos">
-    <table class="table table-striped">
+  <div class="table-responsive " *ngIf="proyectos.length > 0; else noProyectos">
+    <table class="table table-striped ">
       <thead class="text-center">
         <tr>
           <th>Nombre</th>
@@ -39,7 +40,7 @@
           <td>{{ proyecto.tecnologias?.join(', ') }}</td>
           <td>
             <div class="d-flex flex-wrap justify-content-center">
-              <button class="btn btn-sm btn-info me-2" (click)="verFacturas(proyecto.id)">Facturas</button>
+              <button class="btn btn-sm btn-secondary me-2" (click)="verFacturas(proyecto.id)">Facturas</button>
               <a [routerLink]="['/proyectos/editar', proyecto.id]" class="btn btn-sm btn-info me-2">Editar</a>
               <button (click)="eliminarProyecto(proyecto.id)" class="btn btn-sm btn-danger">Eliminar</button>
             </div>
@@ -53,5 +54,3 @@
   <ng-template #noProyectos>
     <p class="text-center">No hay proyectos disponibles. Agrega uno nuevo.</p>
   </ng-template>
-
-</div>
