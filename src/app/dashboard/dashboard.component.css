@@ -1,0 +1,35 @@
+.dashboard-container {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+  
+  .charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .chart-container {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .chart-container h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+  }
+  
+  .chart-wrapper {
+    position: relative;
+    height: 300px;
+    width: 100%;
+  }
+  
+  canvas {
+    max-width: 100%;
+    height: auto !important;
+  }
+  
