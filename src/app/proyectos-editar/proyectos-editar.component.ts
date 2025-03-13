@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProyectoService } from '../services/proyecto.service';
+import { TecnologiaService } from '../services/tecnologia.service';
 
 @Component({
   selector: 'app-proyectos-editar',
@@ -15,12 +16,14 @@ export class ProyectosEditarComponent implements OnInit {
   formularioProyecto !: FormGroup;
   idProyecto!: string | null;
   estados = ['pendiente', 'en progreso', 'completado', 'cancelado'];
+  tecnologiasDisponibles: any[] = [];
 
   constructor(
     private fb: FormBuilder,
     private proyectoService: ProyectoService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private tecnologiaService: TecnologiaService
   ) {}
 
   ngOnInit(): void {
@@ -35,7 +38,12 @@ export class ProyectosEditarComponent implements OnInit {
       estado: ['', Validators.required],
       fechaInicio: ['', Validators.required],
       fechaFin: [''],
-      tecnologias: ['', Validators.required]
+      tecnologias: [[], Validators.required]
+    });
+    
+    // Cargar tecnologías disponibles
+    this.tecnologiaService.obtenerTecnologias().subscribe(tecnologias => {
+      this.tecnologiasDisponibles = tecnologias;
     });
 
     // Si tenemos un ID, cargar los datos del proyecto desde Firebase
@@ -50,7 +58,7 @@ export class ProyectosEditarComponent implements OnInit {
               estado: proyecto.estado.toLowerCase(),
               fechaInicio: new Date(proyecto.fechaInicio).toISOString().split('T')[0],
               fechaFin: proyecto.fechaFin ? new Date(proyecto.fechaFin).toISOString().split('T')[0] : '',
-              tecnologias: proyecto.tecnologias ? proyecto.tecnologias.join(', ') : ''
+              tecnologias: proyecto.tecnologias ? [...proyecto.tecnologias] : []
             });
           } else {
             alert('No se encontró el proyecto.');
@@ -74,7 +82,12 @@ export class ProyectosEditarComponent implements OnInit {
       } else {
         delete datos.fechaFin;
       }
-      datos.tecnologias = datos.tecnologias.split(',').map((t: string) => t.trim());
+      
+      if (Array.isArray(datos.tecnologias)) {
+        datos.tecnologias = datos.tecnologias.map((t: any) => t.toString().trim());
+      } else {
+        datos.tecnologias = [];
+      }
 
       this.proyectoService.actualizarProyecto(this.idProyecto, datos).then(() => {
         alert('Proyecto actualizado con éxito');
@@ -92,4 +105,20 @@ export class ProyectosEditarComponent implements OnInit {
     this.router.navigate(['/lista']); // Redirige a la lista de proyectos
   }
 
+  onCheckboxChange(event: any) {
+    const tecnologiasSeleccionadas = this.formularioProyecto.get('tecnologias')?.value || [];
+  
+    if (event.target.checked) {
+      if (!tecnologiasSeleccionadas.includes(event.target.value)) {
+        tecnologiasSeleccionadas.push(event.target.value);
+      }
+    } else {
+      const index = tecnologiasSeleccionadas.indexOf(event.target.value);
+      if (index > -1) {
+        tecnologiasSeleccionadas.splice(index, 1);
+      }
+    }
+  
+    this.formularioProyecto.get('tecnologias')?.setValue(tecnologiasSeleccionadas);
+  }
 }
