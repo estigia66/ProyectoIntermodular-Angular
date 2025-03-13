@@ -32,4 +32,6 @@
     max-width: 100%;
     height: auto !important;
   }
-  
+  .select-container {
+    text-align: center; 
+  }

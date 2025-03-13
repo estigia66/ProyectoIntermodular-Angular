@@ -2,18 +2,28 @@
     <h1>Dashboard</h1>
     
     <div class="charts-grid">
-      <!-- Gráfico: Distribución de tecnologías -->
-      <div class="chart-container">
-        <h2>Distribución de Tecnologías Utilizadas</h2>
-        <div class="chart-wrapper">
+        <!-- Gráfico: Distribución de tecnologías -->
+        <div class="chart-container">
+          <h2>Distribución de Tecnologías</h2>
+          <!-- Contenedor para centrar el select -->
+          <div class="select-container">
+            <!-- Select para elegir un proyecto específico o todos -->
+            <select (change)="onProjectSelect($event)">
+                <option value="all">Todos los proyectos</option>
+                <option *ngFor="let proyecto of proyectos" [value]="proyecto.nombre">
+                  {{ proyecto.nombre }}
+                </option>
+            </select>
+          </div>
+          <!-- Canvas para el gráfico de distribución de tecnologías -->
           <canvas id="techDistributionChart"></canvas>
         </div>
-      </div>
-  
+      
       <!-- Gráfico: Estado de los proyectos -->
       <div class="chart-container">
         <h2>Estado de los Proyectos</h2>
         <div class="chart-wrapper">
+          <!-- Canvas para el gráfico de estado de proyectos -->
           <canvas id="projectStatusChart"></canvas>
         </div>
       </div>
@@ -22,6 +32,7 @@
       <div class="chart-container">
         <h2>Facturas Emitidas vs Recibidas</h2>
         <div class="chart-wrapper">
+          <!-- Canvas para el gráfico de comparación de facturas -->
           <canvas id="invoiceComparisonChart"></canvas>
         </div>
       </div>
@@ -30,6 +41,7 @@
       <div class="chart-container">
         <h2>Proyectos por Rango Temporal</h2>
         <div class="chart-wrapper">
+          <!-- Canvas para el gráfico de línea temporal de proyectos -->
           <canvas id="projectTimelineChart"></canvas>
         </div>
       </div>
