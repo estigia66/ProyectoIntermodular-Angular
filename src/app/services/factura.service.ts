@@ -14,7 +14,7 @@ export class FacturaService {
   // Obtener facturas por ID de proyecto
   obtenerFacturasPorProyecto(proyectoId: string): Observable<any[]> {
     const facturasRef = collection(this.firestore, this.collectionName);
-    const q = query(facturasRef, where('proyectoId', '==', proyectoId));
+    const q = query(facturasRef, where('proyecto', '==', proyectoId));
 
     return collectionData(q, { idField: 'id' });
   }
