@@ -39,7 +39,7 @@
           <td>{{ proyecto.tecnologias?.join(', ') }}</td>
           <td>
             <div class="d-flex flex-wrap justify-content-center">
-              <button class="btn btn-sm btn-info me-2" (click)="verFacturas(proyecto.id)">Facturas</button>
+              <button class="btn btn-sm btn-secondary me-2" (click)="verFacturas(proyecto.id)">Facturas</button>
               <a [routerLink]="['/proyectos/editar', proyecto.id]" class="btn btn-sm btn-info me-2">Editar</a>
               <button (click)="eliminarProyecto(proyecto.id)" class="btn btn-sm btn-danger">Eliminar</button>
             </div>
