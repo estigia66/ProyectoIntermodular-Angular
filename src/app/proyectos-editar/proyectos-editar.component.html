@@ -62,11 +62,15 @@
 
     <!-- Tecnologías -->
     <div class="mb-3">
-      <label for="tecnologias" class="form-label">Tecnologías</label>
-      <input type="text" id="tecnologias" class="form-control" formControlName="tecnologias" />
-      <div *ngIf="formularioProyecto.get('tecnologias')?.invalid && formularioProyecto.get('tecnologias')?.touched"
-        class="text-danger">
-        Debes especificar al menos una tecnología.
+      <label class="form-label-tecnologias">Tecnologías</label>
+      <div *ngFor="let tecnologia of tecnologiasDisponibles">
+        <input
+          type="checkbox"
+          [value]="tecnologia.nombre"
+          (change)="onCheckboxChange($event)"
+          [checked]="formularioProyecto.get('tecnologias')?.value.includes(tecnologia.nombre)"
+        />
+        {{ tecnologia.nombre }}
       </div>
     </div>
 
