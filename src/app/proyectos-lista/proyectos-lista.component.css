@@ -1,34 +1,89 @@
-/* Colores para cada estado */
+/* Estados con colores destacados */
 .estado-completado {
   color: green;
+  font-weight: bold;
 }
 
 .estado-pendiente {
   color: red;
+  font-weight: bold;
 }
 
 .estado-en-proceso {
   color: orange;
+  font-weight: bold;
 }
 
 .estado-cancelado {
   color: gray;
+  font-weight: bold;
 }
 
+/* Ajuste para centrar contenido y mejorar el diseño */
+.container {
+  max-width: 95%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Hace la tabla responsive */
+.table-responsive {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+/* Estilos de tabla */
 table {
+  width: 100%;
+  border-collapse: collapse;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+th, td {
+  padding: 12px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+/* Botones más compactos */
 .btn-sm {
-  font-size: 0.8rem;
-  padding: 0.25rem 0.5rem;
+  font-size: 0.9rem;
+  padding: 5px 10px;
+  border-radius: 5px;
 }
 
-h2 {
-  color: #333;
-  margin-bottom: 20px;
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+  th, td {
+    padding: 8px;
+  }
+
+  .btn-sm {
+    font-size: 0.8rem;
+    padding: 5px 8px;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
 }
 
-.container {
-  max-width: 1200px;
+@media (max-width: 480px) {
+  th, td {
+    font-size: 0.8rem;
+  }
+
+  .btn-sm {
+    font-size: 0.7rem;
+    padding: 4px 6px;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
 }
