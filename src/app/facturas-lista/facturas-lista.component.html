@@ -24,7 +24,7 @@
           <tr *ngFor="let factura of facturas; let i = index">
             <td class="text-center">{{ i + 1 }}</td>
             <td>{{ factura.numeroFactura }}</td>
-            <td>{{ factura.fechaFactura }}</td>
+            <td>{{ factura.fechaEmision }}</td>
             <td>{{ factura.nombreEmisor }} ({{ factura.cifEmisor }})</td>
             <td>{{ factura.nombreReceptor }} ({{ factura.cifReceptor }})</td>
             <td class="text-end">{{ factura.total }}€</td>
