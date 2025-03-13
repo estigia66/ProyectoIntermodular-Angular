@@ -12,8 +12,8 @@ export class AuthService {
   private userSubject = new BehaviorSubject<Usuario | null>(null);
   user$ = this.userSubject.asObservable();
 
-  private auth = inject(Auth);
-  private firestore = inject(Firestore);
+  private auth = inject(Auth); // Maneja la autentiación
+  private firestore = inject(Firestore); // Maneja la base de datos Firestore
   private router = inject(Router);
   private ngZone = inject(NgZone);
 
