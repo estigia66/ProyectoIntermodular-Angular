@@ -4,6 +4,8 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+  max-width: 1200px; /* Limita el ancho para centrar el contenido */
+  margin: auto;
 }
 
 .card {
@@ -93,25 +95,26 @@
   background-color: #b71525; /* Rojo más oscuro */
 }
 
-@media (min-width: 1200px) {
-  .col-lg-2 {
+/* En pantallas grandes (4 por fila) */
+@media (min-width: 992px) {
+  .col-lg-3 {
     flex: 0 0 auto;
-    width: 20%;
+    width: 25%;
   }
 }
 
-/* En tablets y pantallas medianas (3 por fila) */
-@media (max-width: 1199px) {
-  .col-lg-2 {
-    flex: 0 0 auto;
-    width: 33.33%;
-  }
-}
-
-/* En móviles (2 por fila) */
-@media (max-width: 768px) {
-  .col-lg-2 {
+/* En tablets y pantallas medianas (2 por fila) */
+@media (max-width: 991px) {
+  .col-md-6 {
     flex: 0 0 auto;
     width: 50%;
+  }
+}
+
+/* En móviles (1 por fila) */
+@media (max-width: 576px) {
+  .col-sm-12 {
+    flex: 0 0 auto;
+    width: 100%;
   }
 }
