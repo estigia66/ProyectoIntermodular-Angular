@@ -11,6 +11,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/registro/registro.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { AuthGuard } from './guards/auth.guard';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 
@@ -22,6 +23,7 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent }, // Ruta para el registro
 
   //Ruta para el dashboard (protegida)
+  { path: 'dashboard' , component: DashboardComponent, canActivate: [AuthGuard]},
 
   // Rutas protegidas (requieren autenticación)
   { path: 'proyectos', component: ProyectosListaComponent, canActivate: [AuthGuard] }, // Ruta para listar proyectos
