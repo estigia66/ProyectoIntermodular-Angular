@@ -1,1 +1,10 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
+*{
+    font-family: arial;
+}
+
+h1, h2, h3 {
+    margin-top: 10px; /* Ajusta según sea necesario */
+    margin-bottom: 10px;
+    text-align: center;
+  }
