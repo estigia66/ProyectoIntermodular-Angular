@@ -7,6 +7,7 @@ import Chart from 'chart.js/auto';
 import 'chartjs-adapter-date-fns';
 
 
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -262,6 +263,8 @@ export class DashboardComponent implements OnInit {
               label: 'Proyectos Iniciados',
               data: Object.values(counts),
               borderColor: '#4BC0C0',
+              pointRadius: 5,
+              showLine: false,
               fill: false,
             },
           ],
